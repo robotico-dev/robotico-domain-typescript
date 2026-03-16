@@ -1,0 +1,22 @@
+{
+  "name": "@robotico/domain",
+  "version": "0.1.0",
+  "description": "Robotico Domain — primitives, value objects, and entity abstractions for TypeScript.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist/**/*"],
+  "scripts": {
+    "build": "tsc",
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:1})\""
+  },
+  "keywords": ["robotico", "domain", "ddd", "value-object", "entity"],
+  "author": "Robotico",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robotico-dev/robotico-domain-typescript"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}
