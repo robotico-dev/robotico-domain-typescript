@@ -1,5 +1,5 @@
 {
-  "name": "@robotico/domain",
+  "name": "@robotico-dev/domain",
   "version": "0.1.0",
   "description": "Robotico Domain — primitives, value objects, and entity abstractions for TypeScript.",
   "type": "module",

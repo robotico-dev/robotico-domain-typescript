@@ -1,11 +1,11 @@
-# @robotico/domain
+# @robotico-dev/domain
 
 Domain primitives for TypeScript: **Entity** (identity-based equality) and **ValueObject** (equality by components). Aligned with Robotico.Domain (C#) and dev.robotico.domain (Kotlin).
 
 ## Install
 
 ```bash
-npm install @robotico/domain
+npm install @robotico-dev/domain
 ```
 
 **Requirements:** Node.js >= 18.
@@ -15,7 +15,7 @@ npm install @robotico/domain
 Entities are identified by an `id`. Two entities are equal when their ids are equal (reference equality: `this.id === other.id`).
 
 ```ts
-import { Entity, entityEquals } from "@robotico/domain";
+import { Entity, entityEquals } from "@robotico-dev/domain";
 
 class Order extends Entity<string> {
   constructor(
@@ -46,7 +46,7 @@ entityEquals(null, null); // true
 Value objects are equal when their **equality components** (from `getEqualityComponents()`) are equal in order. Use for values with no identity (e.g. money, address).
 
 ```ts
-import { ValueObject, valueObjectEquals } from "@robotico/domain";
+import { ValueObject, valueObjectEquals } from "@robotico-dev/domain";
 
 class Money extends ValueObject {
   constructor(
