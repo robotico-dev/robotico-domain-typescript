@@ -1,5 +1,11 @@
 /**
- * @robotico/domain — Domain primitives, value objects, and entity abstractions.
- * Placeholder export; implement value objects and entities as needed.
+ * @robotico/domain — primitives, value objects, and entity abstractions for TypeScript.
+ * Aligned with Robotico.Domain (C#) and dev.robotico.domain (Kotlin).
+ *
+ * @packageDocumentation
  */
-export const DOMAIN_VERSION = "0.1.0";
+
+export type { IEntity } from "./entity.js";
+export { Entity, entityEquals } from "./entity.js";
+
+export { ValueObject, valueObjectEquals } from "./value-object.js";
