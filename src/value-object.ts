@@ -88,7 +88,6 @@ export abstract class ValueObject {
 }
 
 function valueEquals(a: unknown, b: unknown): boolean {
-  if (a === b) return true;
   if (a instanceof ValueObject && b instanceof ValueObject) return a.equals(b);
   if (
     typeof (a as { equals?: (x: unknown) => boolean })?.equals === "function"
@@ -154,20 +153,4 @@ function stringHash(s: string): number {
 
 function hashCombine(hash: number, value: number): number {
   return (Math.imul(31, hash) + value) | 0;
-}
-
-/**
- * Null-safe equality for two value objects.
- *
- * @param a - First value object or null/undefined
- * @param b - Second value object or null/undefined
- * @returns true if both null/undefined; false if exactly one is; otherwise a.equals(b)
- */
-export function valueObjectEquals(
-  a: ValueObject | null | undefined,
-  b: ValueObject | null | undefined
-): boolean {
-  if (a == null && b == null) return true;
-  if (a == null || b == null) return false;
-  return a.equals(b);
 }

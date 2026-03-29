@@ -1,6 +1,6 @@
 {
   "name": "@robotico-dev/domain",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Robotico Domain — primitives, value objects, and entity abstractions for TypeScript.",
   "type": "module",
   "main": "dist/index.js",
@@ -27,7 +27,7 @@
     "verify": "npm run lint && npm run build && npm run test:coverage && npm run docs",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
-    "docs": "typedoc --out docs src/index.ts --exclude \"**/*.test.ts\" --exclude \"**/*.laws.test.ts\""
+    "docs": "typedoc --out docs src/index.ts --exclude \"**/*.test.ts\" --exclude \"**/*.laws.test.ts\" --exclude \"**/exports/**\""
   },
   "keywords": ["robotico", "domain", "ddd", "value-object", "entity"],
   "author": "Robotico",

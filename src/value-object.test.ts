@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { ValueObject, valueObjectEquals } from "./value-object.js";
+import { ValueObject } from "./value-object.js";
+import { valueObjectEquals } from "./value-object-equals.js";
 
 class TestVO extends ValueObject {
   constructor(
@@ -101,6 +102,49 @@ describe("ValueObject", () => {
     const a = new VOWithBool(true);
     const b = new VOWithBool(true);
     expect(a.getHashCode()).toBe(b.getHashCode());
+  });
+
+  it("equals is false when component is ValueObject versus primitive", () => {
+    class Inner extends ValueObject {
+      constructor(readonly id: number) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [this.id];
+      }
+    }
+    class Outer extends ValueObject {
+      constructor(readonly x: unknown) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [this.x];
+      }
+    }
+    expect(new Outer(new Inner(1)).equals(new Outer(1))).toBe(false);
+    expect(new Outer(1).equals(new Outer(new Inner(1)))).toBe(false);
+  });
+
+  it("equals compares nested ValueObject components by value", () => {
+    class Nested extends ValueObject {
+      constructor(readonly id: number) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [this.id];
+      }
+    }
+    class Outer extends ValueObject {
+      constructor(readonly n: Nested) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [this.n];
+      }
+    }
+    expect(new Outer(new Nested(1)).equals(new Outer(new Nested(1)))).toBe(
+      true
+    );
   });
 
   it("getHashCode handles nested ValueObject component", () => {
@@ -335,6 +379,62 @@ describe("ValueObject", () => {
     }
     const a = new VOWithAnonFn(f);
     expect(a.getHashCode()).toBe(a.getHashCode());
+  });
+
+  it("getHashCode handles null-proto function with undefined name", () => {
+    const g = function (): void {};
+    Object.defineProperty(g, "name", {
+      value: undefined,
+      configurable: true,
+    });
+    Object.setPrototypeOf(g, null);
+    class VO extends ValueObject {
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [g];
+      }
+    }
+    expect(new VO().getHashCode()).toBe(new VO().getHashCode());
+  });
+
+  it("equals compares iterables via Array.from when Symbol.iterator is missing", () => {
+    class VOArrayLike extends ValueObject {
+      constructor(
+        readonly a: number,
+        readonly b: string
+      ) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        const like = { length: 2, 0: this.a, 1: this.b };
+        return like as unknown as Iterable<unknown>;
+      }
+    }
+    const a = new VOArrayLike(1, "x");
+    const b = new VOArrayLike(1, "x");
+    expect(a.equals(b)).toBe(true);
+  });
+
+  it("equals is false when same class but component iterables differ in length", () => {
+    class VODynamic extends ValueObject {
+      constructor(readonly items: readonly unknown[]) {
+        super();
+      }
+      protected getEqualityComponents(): Iterable<unknown> {
+        return this.items;
+      }
+    }
+    expect(new VODynamic([1]).equals(new VODynamic([1, 2]))).toBe(false);
+  });
+
+  it("getHashCode treats null component as 0", () => {
+    class VOWithNull extends ValueObject {
+      protected getEqualityComponents(): Iterable<unknown> {
+        return [null];
+      }
+    }
+    const a = new VOWithNull();
+    const b = new VOWithNull();
+    expect(a.getHashCode()).toBe(b.getHashCode());
   });
 
   it("equals detects different-length equality components", () => {

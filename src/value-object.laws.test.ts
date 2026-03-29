@@ -3,7 +3,8 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { ValueObject, valueObjectEquals } from "./value-object.js";
+import { ValueObject } from "./value-object.js";
+import { valueObjectEquals } from "./value-object-equals.js";
 
 class TestVO extends ValueObject {
   constructor(

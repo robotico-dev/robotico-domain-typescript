@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { Entity, entityEquals } from "./entity.js";
+import { Entity } from "./entity.js";
+import { entityEquals } from "./entity-equals.js";
 
 class TestEntity extends Entity<string> {
   constructor(id: string) {

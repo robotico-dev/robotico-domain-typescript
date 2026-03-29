@@ -5,7 +5,9 @@
  * @packageDocumentation
  */
 
-export type { IEntity } from "./i-entity.js";
-export { Entity, entityEquals } from "./entity.js";
-
-export { ValueObject, valueObjectEquals } from "./value-object.js";
+export * from "./exports/i-entity.js";
+export * from "./exports/i-domain-event.js";
+export * from "./exports/entity.js";
+export * from "./exports/entity-equals.js";
+export * from "./exports/value-object.js";
+export * from "./exports/value-object-equals.js";
