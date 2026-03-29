@@ -5,7 +5,7 @@
  * @packageDocumentation
  */
 
-export type { IEntity } from "./entity.js";
+export type { IEntity } from "./i-entity.js";
 export { Entity, entityEquals } from "./entity.js";
 
 export { ValueObject, valueObjectEquals } from "./value-object.js";

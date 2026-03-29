@@ -1,15 +1,9 @@
 /**
- * Entity and IEntity — domain objects with identity.
+ * Entity base class — domain objects with identity.
  * Aligned with Robotico.Domain (C#) and dev.robotico.domain (Kotlin).
  */
 
-/**
- * Marks an entity with an identifier of type TId. Equality is by id (reference equality).
- * Implement Entity or use this interface for typing.
- */
-export interface IEntity<TId> {
-  readonly id: TId;
-}
+import type { IEntity } from "./i-entity.js";
 
 /**
  * Base type for entities. Implements IEntity<TId> with equality by id.
